@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from markdown2 import Markdown
 from . import util
+from random  import choice
 
 
 def convert_md_to_html(md):
@@ -97,7 +98,16 @@ def edit2(request):
                 "res": res
             })
 
-        
+def random(request):
+    all_md = util.list_entries()
+    res = choice(all_md)
+    content = convert_md_to_html(res)
+    return render(request, "encyclopedia/converting.html", {
+            "title": res,
+            "res": content
+        })
+
+
 
     
 
