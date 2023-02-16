@@ -22,10 +22,10 @@ def entry(request, title):
         all_md = util.list_entries()
         for md in all_md:
             if title.lower() in md.lower():
-                title = md
+                md = title
         res = convert_md_to_html(title)
         return render(request, "encyclopedia/converting.html", {
-            "title": title,
+            "title": md,
             "res": res
         })
 
