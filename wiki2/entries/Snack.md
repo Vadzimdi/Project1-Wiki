@@ -1,3 +1,3 @@
 # Snack
 
-Snack number one.        
+Snack number      
