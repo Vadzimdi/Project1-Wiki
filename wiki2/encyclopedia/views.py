@@ -20,7 +20,9 @@ def index(request):
 
 def entry(request, title):
     if util.get_entry(title) == None:
-        return render(request, "encyclopedia/error.html")
+        return render(request, "encyclopedia/error.html", {
+            "Err": "Requested page was not found."
+        })
     else:
         all_md = util.list_entries()
         for md in all_md:
@@ -56,7 +58,22 @@ def search(request):
                 return render(request, "encyclopedia/error.html")
 
 
-
-                
+def create(request):
+    if request.method == "GET":
+        return render(request, "encyclopedia/create.html")
+    elif request.method == "POST": 
+        title = request.POST["title"]
+        content = request.POST["Markdown content"]
+        if convert_md_to_html(title):
+            return render(request, "encyclopedia/error.html", {
+            "Err": "Provided title already exist."
+        })   
+        else:
+            util.save_entry(title, content)
+            res = convert_md_to_html(title)
+            return render(request, "encyclopedia/converting.html", {
+                "title": title,
+                "res": res
+            })
 
 
